@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Sign in · Server Monitor{% endblock %}
+
+{% block content %}
+<section class="panel narrow">
+  <h1>Sign in</h1>
+  <p class="lede">Shared admin account. Sign-in is not wired up yet.</p>
+  <form class="stack" action="{{ url_for('login') }}" method="post" autocomplete="off">
+    <label>
+      Username
+      <input type="text" name="username" value="admin" autocomplete="username" readonly>
+    </label>
+    <label>
+      Password
+      <input type="password" name="password" autocomplete="current-password" disabled>
+    </label>
+    <button type="button">Sign in</button>
+  </form>
+</section>
+{% endblock %}

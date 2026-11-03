@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard · Server Monitor{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <h1>Dashboard</h1>
+  <p class="empty">No servers yet.</p>
+  <article class="card" aria-label="Server card placeholder">
+    <header class="card-head">
+      <h2>Server name</h2>
+      <p class="muted">Placeholder card</p>
+    </header>
+    <dl class="metrics">
+      <div>
+        <dt>CPU</dt>
+        <dd>—</dd>
+      </div>
+      <div>
+        <dt>Memory</dt>
+        <dd>—</dd>
+      </div>
+      <div>
+        <dt>Network in</dt>
+        <dd>—</dd>
+      </div>
+      <div>
+        <dt>Network out</dt>
+        <dd>—</dd>
+      </div>
+      <div>
+        <dt>Listening ports</dt>
+        <dd>—</dd>
+      </div>
+      <div>
+        <dt>Last success</dt>
+        <dd>—</dd>
+      </div>
+    </dl>
+  </article>
+</section>
+{% endblock %}

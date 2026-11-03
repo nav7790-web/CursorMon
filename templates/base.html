@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Server Monitor{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('login') }}">Server Monitor</a>
+    <nav class="nav">
+      <a href="{{ url_for('login') }}" {% if page == "login" %}aria-current="page"{% endif %}>Login</a>
+      <a href="{{ url_for('servers') }}" {% if page == "servers" %}aria-current="page"{% endif %}>Servers</a>
+      <a href="{{ url_for('dashboard') }}" {% if page == "dashboard" %}aria-current="page"{% endif %}>Dashboard</a>
+    </nav>
+  </header>
+  <main class="page">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
