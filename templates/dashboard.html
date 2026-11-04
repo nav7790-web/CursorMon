@@ -4,39 +4,67 @@
 
 {% block content %}
 <section class="panel">
-  <h1>Dashboard</h1>
+  <div class="heading-row">
+    <h1>Dashboard</h1>
+    <a class="button" href="{{ url_for('dashboard') }}">Refresh</a>
+  </div>
+  <p class="lede">Read-only snapshot. This page reloads about every 10 seconds.</p>
+
+  {% if not cards %}
   <p class="empty">No servers yet.</p>
-  <article class="card" aria-label="Server card placeholder">
-    <header class="card-head">
-      <h2>Server name</h2>
-      <p class="muted">Placeholder card</p>
-    </header>
-    <dl class="metrics">
-      <div>
-        <dt>CPU</dt>
-        <dd>—</dd>
-      </div>
-      <div>
-        <dt>Memory</dt>
-        <dd>—</dd>
-      </div>
-      <div>
-        <dt>Network in</dt>
-        <dd>—</dd>
-      </div>
-      <div>
-        <dt>Network out</dt>
-        <dd>—</dd>
-      </div>
-      <div>
-        <dt>Listening ports</dt>
-        <dd>—</dd>
-      </div>
-      <div>
-        <dt>Last success</dt>
-        <dd>—</dd>
-      </div>
-    </dl>
-  </article>
+  {% endif %}
+
+  <div class="cards">
+    {% for card in cards %}
+    <article class="card{% if not card.ok %} card-error{% endif %}">
+      <header class="card-head">
+        <h2>{{ card.name }}</h2>
+        <p class="muted">{{ card.host }}:{{ card.port }}</p>
+      </header>
+      {% if not card.ok %}
+      <p class="banner" role="alert">{{ card.error }}</p>
+      {% endif %}
+      <dl class="metrics">
+        <div>
+          <dt>CPU</dt>
+          <dd>{% if card.ok %}{{ card.cpu }}%{% else %}—{% endif %}</dd>
+        </div>
+        <div>
+          <dt>Memory</dt>
+          <dd>{{ card.memory or "—" }}</dd>
+        </div>
+        <div>
+          <dt>Network in</dt>
+          <dd>{{ card.net_in or "—" }}</dd>
+        </div>
+        <div>
+          <dt>Network out</dt>
+          <dd>{{ card.net_out or "—" }}</dd>
+        </div>
+        <div>
+          <dt>Listening ports</dt>
+          <dd>
+            {% if card.ports %}
+            <ul class="ports">
+              {% for port in card.ports %}
+              <li>{{ port.protocol }} {{ port.port }} on {{ port.address }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            —
+            {% endif %}
+          </dd>
+        </div>
+        <div>
+          <dt>Last success</dt>
+          <dd>{{ card.last_success or "—" }}</dd>
+        </div>
+      </dl>
+    </article>
+    {% endfor %}
+  </div>
 </section>
+<script>
+  setTimeout(function () { window.location.reload(); }, 10000);
+</script>
 {% endblock %}

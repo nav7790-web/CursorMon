@@ -7,6 +7,8 @@
   --card: #ffffff;
   --accent: #1f6feb;
   --accent-ink: #ffffff;
+  --danger: #9b1c1c;
+  --danger-bg: #fdecec;
 }
 
 * {
@@ -107,7 +109,8 @@ input {
   background: var(--card);
 }
 
-button {
+button,
+a.button {
   font: inherit;
   font-weight: 600;
   padding: 0.55rem 0.9rem;
@@ -116,6 +119,93 @@ button {
   background: var(--accent);
   color: var(--accent-ink);
   justify-self: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.linkish {
+  background: transparent;
+  color: var(--ink);
+  font-weight: 400;
+  padding: 0.35rem 0.7rem;
+}
+
+button.danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+select {
+  font: inherit;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+}
+
+.banner {
+  margin: 0.75rem 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+.heading-row,
+.form-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.heading-row {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.form-grid {
+  grid-template-columns: 1fr 1fr;
+  margin-top: 0.5rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+th {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cards {
+  display: grid;
+  gap: 1rem;
+}
+
+.card-error {
+  border-color: #f3c0c0;
+}
+
+.ports {
+  margin: 0;
+  padding-left: 1.1rem;
 }
 
 .card {
@@ -157,5 +247,9 @@ button {
 @media (max-width: 720px) {
   .metrics {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 }
