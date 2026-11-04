@@ -8,11 +8,17 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="{{ url_for('login') }}">Server Monitor</a>
+    <a class="brand" href="{{ url_for('dashboard') if signed_in else url_for('login') }}">Server Monitor</a>
     <nav class="nav">
-      <a href="{{ url_for('login') }}" {% if page == "login" %}aria-current="page"{% endif %}>Login</a>
+      {% if signed_in %}
       <a href="{{ url_for('servers') }}" {% if page == "servers" %}aria-current="page"{% endif %}>Servers</a>
       <a href="{{ url_for('dashboard') }}" {% if page == "dashboard" %}aria-current="page"{% endif %}>Dashboard</a>
+      <form method="post" action="{{ url_for('logout') }}">
+        <button class="linkish" type="submit">Sign out</button>
+      </form>
+      {% else %}
+      <a href="{{ url_for('login') }}" {% if page == "login" %}aria-current="page"{% endif %}>Login</a>
+      {% endif %}
     </nav>
   </header>
   <main class="page">

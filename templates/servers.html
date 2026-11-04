@@ -5,6 +5,78 @@
 {% block content %}
 <section class="panel">
   <h1>Servers</h1>
+  <p class="lede">Add a Linux host that already accepts SSH. Removing a server only deletes it from this app.</p>
+  {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    <p class="banner" role="alert">{{ message }}</p>
+    {% endfor %}
+  {% endwith %}
+
+  {% if servers %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Host</th>
+          <th>Port</th>
+          <th>User</th>
+          <th>Auth</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for server in servers %}
+        <tr>
+          <td>{{ server.name }}</td>
+          <td>{{ server.host }}</td>
+          <td>{{ server.port }}</td>
+          <td>{{ server.username }}</td>
+          <td>{{ "Key" if server.auth == "key" else "Password" }}</td>
+          <td>
+            <form method="post" action="{{ url_for('remove_server', server_id=server.id) }}">
+              <button class="danger" type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
   <p class="empty">No servers yet.</p>
+  {% endif %}
+
+  <h2>Add a server</h2>
+  <form class="form-grid" method="post" action="{{ url_for('servers') }}" autocomplete="off">
+    <label>
+      Display name
+      <input type="text" name="name" maxlength="80" required>
+    </label>
+    <label>
+      Hostname or IP
+      <input type="text" name="host" required>
+    </label>
+    <label>
+      SSH port
+      <input type="number" name="port" min="1" max="65535" value="22" required>
+    </label>
+    <label>
+      SSH username
+      <input type="text" name="username" required>
+    </label>
+    <label>
+      Authentication
+      <select name="auth">
+        <option value="password">Password</option>
+        <option value="key">Private key path</option>
+      </select>
+    </label>
+    <label>
+      Password or key path
+      <input type="password" name="secret" autocomplete="off" required>
+    </label>
+    <button type="submit">Add server</button>
+  </form>
 </section>
 {% endblock %}
